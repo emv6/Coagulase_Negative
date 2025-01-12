@@ -1,5 +1,5 @@
 # Coagulase_Negative
-Identification of Coagulase Negative Variants of Staphylococcus aureus within New Zealand Dairy Cows
+Identification of Coagulase Negative Variants of *Staphylococcus aureus* within New Zealand Dairy Cows
 
 All genomic analysis is run on New Zealand eScience Infrastructure (NESI) unless specified
 
@@ -132,6 +132,95 @@ abricate --mincov 55 --minid 90 *_contigs.fasta --db VFDB > summary_vfdb.txt
 #Resistome
 abricate --mincov 55 --minid 90 *_contigs.fasta --db CARD > summary_card.txt
 ```
+
+### Studying the Staphylocoagulase (*coa*) gene
+```python
+#!/usr/bin/env python 3
+
+def print_header ():
+    header = """
+======================================
+Script Name is Coamatches.py
+Description:
+    This script searches a virulome file for matches to the gene coagulase (coa) and outputs the line matches to a text file for further analysis
+
+Author: Emma Voss
+Version 1.1
+
+=======================================
+
+"""
+    print(header)
+print_header()
+
+
+input_file = "VFDB_Output.tab" 
+output_file = "coa_virulome.txt"
+
+with open(input_file, "r") as infile, open(output_file, "w") as outfile:
+    for line in infile:
+        if "coa" in line: #Check to see if coa is in the line
+            outfile.write(line) #write the matching line to the out file
+
+print(f"Lines containing 'coa' have been saved to {output_file}.")
+```
+```bash
+#!/bin/bash
+
+
+# Input file containing the virulome data
+
+input_file="coa_virulome.txt"
+
+output_file_positive="samtoolscoord_positive.txt"
+
+output_file_negative="samtoolscoord_negative.txt"
+
+# Clear or create the output files
+> "$output_file_positive"
+> "$output_file_negative"
+
+# Read each line of the input file
+while IFS=$'\n' read -r line; do
+
+ # Skip empty lines
+ if [[ -z "$line" ]]; then
+   continue
+ fi
+
+ # Extract fields using awk
+ read contig_file contig_name start_coord end_coord strand <<< $(echo "$line" | awk '{print $1, $2, $3, $4, $5}')
+
+ #Print extracted values to ensure they are correct
+ echo "Processing line: $line"
+ echo "Extracted values - File: $contig_file, Contig: $contig_name, Start: $start_coord, End: $end_coord, Strand: $strand"
+
+ # Checking samtools command
+ samtools_command="samtools faidx $contig_file $contig_name:$start_coord-$end_coord"
+
+ # Execute the samtools command and append output to the appropriate file
+ if [[ "$strand" == "+" ]]; then
+   echo "Writing to positive file: $output_file_positive"
+   $samtools_command | sed -e "s|>|> ${contig_file}_${strand}_|" >> "$output_file_positive"
+ elif [[ "$strand" == "-" ]]; then
+   echo "Writing to negative file: $output_file_negative"
+   $samtools_command | sed -e "s|>|> ${contig_file}_${strand}_|" >> "$output_file_negative"
+ else
+   echo "Strand is neither '+' nor '-': $strand"
+ fi
+
+done < "$input_file"
+```
+Convert the *coa* gene matches identified on the reverse strand to the reverse complement using seqtk \
+`module load seqtk/1.4-GCC-11.3.0` \
+`seqkit seq -r samtoolscoord_negative.txt > samtoolscoord_negative_reversecomp.txt \
+cat samtoolscoord_negative_reversecomp.txt samtoolscoord_positive.txt > coa_sequences.txt` 
+
+[Translate](https://www.bioinformatics.org/sms2/translate.html) *coa* sequences to protein sequences
+
+
+
+
 
 
 
