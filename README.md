@@ -213,8 +213,8 @@ done < "$input_file"
 ```
 Convert the *coa* gene matches identified on the reverse strand to the reverse complement using seqtk \
 `module load seqtk/1.4-GCC-11.3.0` \
-`seqkit seq -r samtoolscoord_negative.txt > samtoolscoord_negative_reversecomp.txt \
-cat samtoolscoord_negative_reversecomp.txt samtoolscoord_positive.txt > coa_sequences.txt` 
+`seqkit seq -r samtoolscoord_negative.txt > samtoolscoord_negative_reversecomp.txt` \
+`cat samtoolscoord_negative_reversecomp.txt samtoolscoord_positive.txt > coa_sequences.txt` 
 
 [Translate](https://www.bioinformatics.org/sms2/translate.html) *coa* sequences to protein sequences
 
