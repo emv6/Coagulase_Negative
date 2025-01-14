@@ -1,7 +1,7 @@
 # Coagulase_Negative
 Identification of Coagulase Negative Variants of *Staphylococcus aureus* within New Zealand Dairy Cows
 
-All genomic analysis is run on New Zealand eScience Infrastructure (NESI) unless specified
+All genomic analysis was run on New Zealand eScience Infrastructure (NESI) unless specified
 
 ### Kraken2 
 To identify the species assignment of the 1308 NAS isolates sequenced 
