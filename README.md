@@ -172,9 +172,9 @@ print(f"Lines containing 'coa' have been saved to {output_file}.")
 
 input_file="coa_virulome.txt"
 
-output_file_positive="samtoolscoord_positive.txt"
+output_file_positive="samtoolscoord_positive.fa"
 
-output_file_negative="samtoolscoord_negative.txt"
+output_file_negative="samtoolscoord_negative.fa"
 
 # Clear or create the output files
 > "$output_file_positive"
@@ -213,8 +213,8 @@ done < "$input_file"
 ```
 Convert the *coa* gene matches identified on the reverse strand to the reverse complement using seqtk \
 `module load seqtk/1.4-GCC-11.3.0` \
-`seqtk seq -r samtoolscoord_negative.txt > samtoolscoord_negative_reversecomp.txt` \
-`cat samtoolscoord_negative_reversecomp.txt samtoolscoord_positive.txt > coa_sequences.txt` 
+`seqtk seq -r samtoolscoord_negative.fa > samtoolscoord_negative_reversecomp.fa` \
+`cat samtoolscoord_negative_reversecomp.fa samtoolscoord_positive.fa > coa_sequences.fa` 
 
 [Translate](https://www.bioinformatics.org/sms2/translate.html) *coa* sequences to protein sequences
 
