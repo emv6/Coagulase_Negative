@@ -79,10 +79,10 @@ chmod +x spa_command.txt
 [AGRvate](https://github.com/VishnuRaghuram94/AgrVATE) was used to identify each genomes *agr* type. A conda environment was created then the contig fasta files was used as input for AGRvate. 
 
 ### Multilocus Sequence Typing [MLST](https://github.com/tseemann/mlst)
-mlst --scheme saureus Coag_Neg/*_contigs.fasta
+```mlst --scheme saureus Coag_Neg/*_contigs.fasta```
 
 ## Coagulase-Negative Tree 
-### [Snippy](https://github.com/tseemann/snippy)
+### [Snippy](https://github.com/tseemann/snippy) Generating an alignment comparing the 22 coagulase-positive *S. aureus*, 95 atypical coagulase-negative *S. aureus* to a reference bovine *S. aureus* genome. 
 ```
 #!/bin/bash -e
 #SBATCH --cpus-per-task=20 --mem 50Gb --time 166:00:00 -J 12566_SNIPPY_EV
@@ -96,7 +96,7 @@ echo CC151_coa.sh has been made
 
 sh ./CC151_coa.sh
 ```
-### [IQ-TREE2](https://github.com/iqtree/iqtree2)
+### [IQ-TREE2](https://github.com/iqtree/iqtree2) Input is an alignment file and output is a phylogenetic tree visualised in [TreeViewer](https://github.com/arklumpus/TreeViewer)
 ```#!/bin/bash -e
 #SBATCH --cpus-per-task=8 --mem 50Gb --time 166:00:00 -J IQTREE_EV
 
