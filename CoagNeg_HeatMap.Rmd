@@ -1,0 +1,59 @@
+---
+title: "FastANI HeatMap"
+output: html_notebook
+---
+
+```{r ANI heatmap}
+
+library(tidyr)
+library(pheatmap)
+
+#load ANI data
+ANI <- read.csv("fastani.csv", header = TRUE, sep = ",") #ANI data
+ANI$Query = factor(ANI$Query,
+                           levels = unique(ANI$Query)) #Only save unique categorical variables
+
+ANI_RESULTS<-spread(ANI, Query, ANI) #spread data to matrix 
+rownames(ANI_RESULTS) <- ANI_RESULTS[,1] #set first column as row name
+ANI_matrix <- as.matrix(ANI_RESULTS[,-1]) #convert to matrix remove first column 
+any(is.na(ANI_matrix))
+
+metadata <- read.csv("Metadata_fastani.csv", header = TRUE, sep = ",") #Metadata file 
+rownames(metadata) <- metadata$Filename #Rownames for metadata
+
+metadata$Coagulase_Status <- factor(metadata$Coagulase_Status, levels = c("Negative", "Positive")) #set coagulase level
+
+annotation_col <- data.frame(Coagulase = metadata$Coagulase_Status)
+rownames(annotation_col) <- metadata$Filename
+annotation_row <- annotation_col #Annotations for both columns and rows 
+
+ordered_filenames <- rownames(metadata[order(metadata$Coagulase_Status), ]) #Reordered filenames 
+
+
+ANI_matrix <- ANI_matrix[ordered_filenames, ordered_filenames]
+
+annotation_colours <- list(Coagulase = c("Positive"="#38AD23", "Negative"="#EB1A17"))
+
+
+pheatmap(ANI_matrix, 
+         cluster_rows = FALSE, 
+         cluster_cols = FALSE, 
+         annotation_col = annotation_col,
+         annotation_row = annotation_row,
+         annotation_colors = annotation_colours,
+         color= colorRampPalette(c("#A4C3DE","#66A2D8", "#0B4171", "#222255"))(4),
+         breaks=c(97, 98, 99, 100),
+         legend_breaks = c(97, 98, 99, 100),
+         fontsize = 10, 
+         show_rownames = F, 
+         show_colnames = F, 
+         labels_col = NULL, 
+         border_color = "black",
+         cellwidth = 6,
+         angle_col = 45,
+         cellheight = 6,
+         width=15,
+         height=12,
+         filename ="coagneg_heatmap.jpg")
+         dev.off()
+```
