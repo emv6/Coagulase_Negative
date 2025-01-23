@@ -22,7 +22,7 @@ abricate --mincov 55 --minid 90 *_contigs.fasta --db CARD > summary_card.txt
 ```
 
 ### Studying the Staphylocoagulase (*coa*) gene
-Script that analyses Virulome file for matches to the gene coagulase(*coa*) gene - [coa_matches](https://github.com/emv6/Coagulase_Negative/blob/main/coa_match.py)
+Script that analyses Virulome file for matches to the gene coagulase(*coa*) gene - [coa_matches](https://github.com/emv6/Coagulase_Negative/blob/main/coa_match.py) \
 Script analyses the coa_match and uses samtools to output the nucleotide sequence for the *coa* match. [Output_Coa_Gene](https://github.com/emv6/Coagulase_Negative/blob/main/Output_coa_gene.sh)
 
 Convert the *coa* gene matches identified on the reverse strand to the reverse complement using seqtk \
