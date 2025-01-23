@@ -47,7 +47,7 @@ abricate --mincov 55 --minid 90 *_contigs.fasta --db VFDB > summary_vfdb.txt
 #Resistome
 abricate --mincov 55 --minid 90 *_contigs.fasta --db CARD > summary_card.txt
 ```
-### [Prokka](https://github.com/tseemann/prokka)
+### [Prokka](https://github.com/tseemann/prokka) annotatation of bacterial genes in the atypical coagulase-negative 95 isolates. 
 ```
 #!/bin/bash
 assembly_dir=assembly/Coag_Neg/
