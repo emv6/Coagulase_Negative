@@ -30,7 +30,7 @@ done
 echo "FastQC analysis completed for all samples"
 ```
 ### Kraken2 
-To identify the species assignment of the 1308 NAS isolates sequenced 
+To identify the species assignment of the 1274 NAS isolates sequenced 
 script for [Kraken2 Analysis](https://github.com/emv6/Coagulase_Negative/blob/main/Kraken2.sh)
 Script for analysing [Kraken2 Reports](https://github.com/emv6/Coagulase_Negative/blob/main/Kraken2_Report.py)
 
