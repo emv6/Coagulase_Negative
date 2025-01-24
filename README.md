@@ -81,27 +81,6 @@ chmod +x spa_command.txt
 ### Multilocus Sequence Typing [MLST](https://github.com/tseemann/mlst)
 ```mlst --scheme saureus Coag_Neg/*_contigs.fasta```
 
-## Coagulase-Negative Tree 
-### [Snippy](https://github.com/tseemann/snippy) Generating an alignment comparing the 22 coagulase-positive *S. aureus*, 95 atypical coagulase-negative *S. aureus* to a reference bovine *S. aureus* genome. 
-```
-#!/bin/bash -e
-#SBATCH --cpus-per-task=20 --mem 50Gb --time 166:00:00 -J 12566_SNIPPY_EV
-
-REF=Staphylococcus_aureus_RF122_NC_007622.1.fasta
-INPUT=CC151_All_NZ_International.txt
-
-snippy-multi $INPUT --ref $REF --cpus 16 > CC151_coa.sh
-
-echo CC151_coa.sh has been made
-
-sh ./CC151_coa.sh
-```
-### [IQ-TREE2](https://github.com/iqtree/iqtree2) Input is an alignment file and output is a phylogenetic tree visualised in [TreeViewer](https://github.com/arklumpus/TreeViewer)
-```#!/bin/bash -e
-#SBATCH --cpus-per-task=8 --mem 50Gb --time 166:00:00 -J IQTREE_EV
-
-iqtree2 -s clean.full.aln -B 1000 -m JC+G
-```
 ### [FastANI](https://github.com/ParBLiSS/FastANI) was used to determine the mean average nucleotide identity comparing the 22 coagulase-positive *S. aureus* to 95 atypical coagulase-negative *S. aureus* with the visualisation in [R](https://github.com/emv6/Coagulase_Negative/blob/main/CoagNeg_HeatMap.Rmd). 
 ```#!/bin/bash
 #SBATCH -J 12566_FastANI
@@ -126,6 +105,27 @@ ARRAY_ITEM=${LIST_OF_ALL_FILES[$SLURM_ARRAY_TASK_ID]}
 #Run FastANI
 echo ${ARRAY_ITEM}
 fastANI -r ${ARRAY_ITEM} --ql $MY_FILE_LIST -o ${SLURM_ARRAY_TASK_ID}.txt
+```
+## Coagulase-Negative Tree 
+### [Snippy](https://github.com/tseemann/snippy) Generating an alignment comparing the 95 atypical coagulase-negative *S. aureus* to the reference bovine *S. aureus* RF122 genome. 
+```
+#!/bin/bash -e
+#SBATCH --cpus-per-task=20 --mem 50Gb --time 166:00:00 -J 12566_SNIPPY_EV
+
+REF=Staphylococcus_aureus_RF122_NC_007622.1.fasta
+INPUT=CC151_All_NZ_International.txt
+
+snippy-multi $INPUT --ref $REF --cpus 16 > CC151_coa.sh
+
+echo CC151_coa.sh has been made
+
+sh ./CC151_coa.sh
+```
+### [IQ-TREE2](https://github.com/iqtree/iqtree2) Input is an alignment file and output is a phylogenetic tree visualised in [TreeViewer](https://github.com/arklumpus/TreeViewer)
+```#!/bin/bash -e
+#SBATCH --cpus-per-task=8 --mem 50Gb --time 166:00:00 -J IQTREE_EV
+
+iqtree2 -s clean.full.aln -B 1000 -m JC+G
 ```
 ## Studying the Staphylocoagulase (*coa*) gene
 Script that analyses Virulome file for matches to the gene coagulase(*coa*) gene - [coa_matches](https://github.com/emv6/Coagulase_Negative/blob/main/coa_match.py) \
