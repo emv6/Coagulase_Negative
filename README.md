@@ -136,6 +136,8 @@ Convert the *coa* gene matches identified on the reverse strand to the reverse c
 `seqtk seq -r samtoolscoord_negative.fa > samtoolscoord_negative_reversecomp.fa` \
 `cat samtoolscoord_negative_reversecomp.fa samtoolscoord_positive.fa > coa_sequences.fa` 
 
+Script that takes all the coa_sequences.fa and collates all headers that have the same *coa* gene sequence - [Identical_Gene Match](https://github.com/emv6/Coagulase_Negative/blob/main/Identical_coa_gene.py)
+
 [Translate](https://www.bioinformatics.org/sms2/translate.html) *coa* sequences to protein sequences
 
 
